@@ -49,12 +49,29 @@ export default function GenerateEvaluation() {
     console.log(values);
   };
 
+  const handleDownloadProject = () => {
+    // URL del archivo a descargar
+    const fileUrl = 'https://example.com/path/to/your/file.pdf';
+    const fileName = 'file.pdf';
+
+    // Crear un enlace temporal
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = fileName;
+
+    // Simular un clic en el enlace
+    document.body.appendChild(link);
+    link.click();
+  };
+
+
   return (
     <Dialog>
       <DialogTrigger asChild>
           <Button>Evaluar Proyecto</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
+
         <Form {...generateEvaluationForm}>
           <form
             className="tw-grid tw-gap-5 tw-py-1"
@@ -67,7 +84,14 @@ export default function GenerateEvaluation() {
                 feedback del proyecto.
               </DialogDescription>
             </DialogHeader>
+            <div>
+            <Button onClick={handleDownloadProject}>
+      Descargar Documento de proyecto
+    </Button>
+    <p className="tw-mt-2 tw-font-light tw-text-gray-600 tw-text-sm">Descarga el archivo adjunto para poder evaluar el proyecto</p>
+            </div>
 
+    
             <FormField
               control={generateEvaluationForm.control}
               name="feedback"

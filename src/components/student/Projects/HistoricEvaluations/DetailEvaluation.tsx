@@ -1,6 +1,5 @@
 import { Button } from "@shadcn/components/ui/button";
-import { Dialog,DialogTrigger, DialogHeader ,DialogContent, DialogTitle,DialogDescription, DialogFooter} from "@shadcn/components/ui/dialog";
-import { Input } from "@shadcn/components/ui/input";
+import { Dialog,DialogTrigger, DialogHeader ,DialogClose, DialogContent, DialogTitle,DialogDescription, DialogFooter} from "@shadcn/components/ui/dialog";
 import { Label } from "@shadcn/components/ui/label";
 
 export default function DetailEvaluation(){
@@ -10,35 +9,40 @@ export default function DetailEvaluation(){
     </DialogTrigger>
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>Edit profile</DialogTitle>
+        <DialogTitle>Detalle de evaluación</DialogTitle>
         <DialogDescription>
-          Make changes to your profile here. Click save when you're done.
+            Estado de evaluación
         </DialogDescription>
       </DialogHeader>
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
           <Label htmlFor="name" className="text-right">
-            Name
+            Observaciones
           </Label>
-          <Input
-            id="name"
-            defaultValue="Pedro Duarte"
-            className="col-span-3"
-          />
-        </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <Label htmlFor="username" className="text-right">
-            Username
-          </Label>
-          <Input
-            id="username"
-            defaultValue="@peduarte"
-            className="col-span-3"
-          />
-        </div>
-      </div>
+            <p className="tw-text-sm">
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis laboriosam itaque vitae deserunt porro illum magnam, asperiores nam sequi possimus quos excepturi, obcaecati perspiciatis architecto quis sit culpa iusto est.
+            </p>
+        <p className="tw-mt-2 tw-text-gray-600 tw-text-sm">
+          <span className="tw-font-bold tw-mr-2">Estado de proyecto:</span> Aprobado
+        </p>
+        <p className="tw-mt-1 tw-text-gray-600 tw-text-sm">
+          <span className="tw-font-bold tw-mr-2">Estudiante solicitante:</span> Camilo Beltran
+        </p>
+        <p className="tw-mt-1 tw-text-gray-600 tw-text-sm">
+          <span className="tw-font-bold tw-mr-2">Docente evaluador:</span> Ana Beatriz
+        </p>
+        <p className="tw-mt-1 tw-text-gray-600 tw-text-sm">
+          <span className="tw-font-bold tw-mr-2">Fecha de solicitud:</span> 2024-04-10
+        </p>
+       
+        <p className="tw-mt-1 tw-text-gray-600 tw-text-sm">
+          <span className="tw-font-bold tw-mr-2">Fecha de evaluación:</span> 2024-05-02
+        </p>
+       
       <DialogFooter>
-        <Button type="submit">Save changes</Button>
+      <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Cerrar
+            </Button>
+          </DialogClose>
       </DialogFooter>
     </DialogContent>
   </Dialog>
