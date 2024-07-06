@@ -4,6 +4,7 @@ import Login from './pages/login'
 import StudentHome from './pages/studentHome'
 import TeacherHome from './pages/teacherHome'
 import AdminHome from './pages/adminHome'
+import { Toaster } from "@shadcn/components/ui/sonner"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Route path="/admin" element={ <AdminHome /> } />
         <Route path="/login" element={<Login/>}/>
       </Routes>
+      <Toaster />
     </>
   )
 }

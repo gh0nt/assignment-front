@@ -8,17 +8,28 @@ import {
 import { Label } from "@shadcn/components/ui/label";
 import { Input } from "@shadcn/components/ui/input";
 import { Button } from "@shadcn/components/ui/button";
-import { Form, FormField, FormItem } from "@shadcn/components/ui/form";
+import { Form, FormField, FormItem, FormMessage } from "@shadcn/components/ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { loginUser } from "@/api/auth/login";
+import { useState } from "react";
+import { LoginUserDAO } from "@/models/auth";
+import { useNavigate } from "react-router-dom";
+import { mapRoles } from "@/config/roles";
 
 export default function Login() {
+
+  const [messageErrorLoginUser, setMessageErrorLoginUser] = useState("");
+  const navigate = useNavigate();
+
   const formSchema = z.object({
-    email: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
+    email: z.string().min(1, {
+      message: "El correo es requerido.",
+    }).email('Debe introducir un correo valido'),
+    password: z.string().min(1, {
+       message : 'La contraseña es requerida'
     }),
-    password: z.string(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,8 +40,24 @@ export default function Login() {
     },
   });
 
-  const HandlerLoginUser = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const HandlerLoginUser = async (values: z.infer<typeof formSchema>) => {
+    try{
+      setMessageErrorLoginUser("");
+      const responseLogin = await loginUser({userEmail : values.email, password : values.password})
+      const responseData : LoginUserDAO = await responseLogin.data;
+      window.localStorage.setItem('evaluate-project-token', responseData.token);
+      window.localStorage.setItem('evaluate-project-user', JSON.stringify({
+        email : responseData.email,
+        role : responseData.role,
+        id : responseData.id,
+        name : responseData.name
+      }));
+
+      navigate(`/${mapRoles[responseData.role]}`);
+
+    }catch(error : unknown){
+        setMessageErrorLoginUser('El usuario o contraseña es incorrecto, intente de nuevo')
+    }
   }
   return (
     <div className="tw-flex tw-h-screen tw-w-full tw-items-center tw-justify-center tw-bg-gray-100 tw-px-5 tw-dark:bg-gray-950">
@@ -62,6 +89,7 @@ export default function Login() {
                           {...field}
                         />
                       </div>
+                      <FormMessage/>
                     </FormItem>
                   )}
                 />
@@ -81,12 +109,14 @@ export default function Login() {
                           {...field}
                         />
                       </div>
+                      <FormMessage/>
                     </FormItem>
                   )}
                 />
                 <Button type="submit" className="tw-w-full">
                   Ingresar
                 </Button>
+                <p className="message-error tw-text-sm">{messageErrorLoginUser}</p>
               </form>
             </Form>
           </CardContent>

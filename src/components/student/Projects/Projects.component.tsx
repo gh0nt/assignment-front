@@ -6,7 +6,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@shadcn/components/ui/breadcrumb";
-import NewProject from "./NewProject/NewProject";
 import HistoricEvaluation from './HistoricEvaluations/';
 
 export default function StudentEvaluations() {
@@ -23,7 +22,6 @@ export default function StudentEvaluations() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>{" "}
-      <NewProject/>
       <div className="tw-mt-8">
         <HistoricEvaluation/>
       </div>

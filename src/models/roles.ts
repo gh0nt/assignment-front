@@ -1,0 +1,1 @@
+export type MapRoles = Record<string, string>

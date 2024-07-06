@@ -22,12 +22,23 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { createNewProject } from "@/api/project/newProject";
+import { toast } from "sonner"
 
-export default function NewProject() {
+export interface NewProjectProps {
+  getProjects : () => void
+}
+
+export default function NewProject({getProjects} : NewProjectProps) {
+  
+  const [isOpenNewProjectDialog, setIsOpenNewProjectDialog] = useState(false);
+  const [isCreatingNewProject, setIsCreatingNewProject] = useState(false);
+  const [messageErrorNewProject,setMessageErrorNewProject] = useState("");
+
   const formSchema = z.object({
-    subject: z.string({required_error : 'Debe proporcionar el tema del proyecto'}).trim().min(1, { message: "Debe ingresar el tema del proyecto" })
-    ,
-    projectFile: z.instanceof(File).refine(file => file.size > 0, 'El documento del proyecto es requerido')
+    subject: z.string({required_error : 'Debe proporcionar el tema del proyecto'}).trim().min(1, { message: "Debe ingresar el tema del proyecto" }),
+    projectFile: z.instanceof(File,{message : 'No es un archivo'}).refine(file => file.size > 0, 'El documento del proyecto es requerido')
   });
 
   const newProjectForm = useForm<z.infer<typeof formSchema>>({
@@ -38,12 +49,33 @@ export default function NewProject() {
     },
   });
 
-  const HandlerNewProject = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const HandlerNewProject = async (values: z.infer<typeof formSchema>) => {
+    try{
+      setIsCreatingNewProject(true);
+      setMessageErrorNewProject("");
+      const projectFormData = new FormData();
+      projectFormData.append('Title', values.subject)
+      projectFormData.append('Description', 'ss')
+      projectFormData.append('StudentId', JSON.parse(window.localStorage.getItem('evaluate-project-user') || '').id)
+      projectFormData.append('File', values.projectFile)
+
+      await createNewProject(projectFormData)
+      setIsCreatingNewProject(false);
+      setIsOpenNewProjectDialog(false);
+      getProjects();
+
+      toast("Creación de proyecto", {
+        description: "El proyecto se ha creado exitosamente",
+      })
+
+    }catch(error : unknown){
+      setIsCreatingNewProject(false);
+      setMessageErrorNewProject('Ha ocurrido un error al crear el proyecto, intente de nuevo')
+    }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpenNewProjectDialog} onOpenChange={setIsOpenNewProjectDialog}>
       <DialogTrigger asChild>
         <div className="tw-mt-10">
           <Button>Enviar proyecto a evaluar</Button>
@@ -106,10 +138,14 @@ export default function NewProject() {
                   <FormMessage></FormMessage>
                 </FormItem>
               )}
+              
             />
+                      <p className="message-error tw-text-sm">{messageErrorNewProject}</p>
+
         <DialogFooter>
-          <Button type="submit">Enviar proyecto</Button>
-        </DialogFooter>
+          <Button type="submit" disabled={isCreatingNewProject ? true : false}>{isCreatingNewProject ? 'Creando proyecto...' : "Enviar proyecto"}</Button>
+
+          </DialogFooter>
         </form>
         </Form>
       </DialogContent>
