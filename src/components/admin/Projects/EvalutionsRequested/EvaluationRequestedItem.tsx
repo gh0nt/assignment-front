@@ -106,9 +106,9 @@ export default function EvaluationRequestedItem({
         <h3 className="tw-text-xl  tw-font-bold">
           {project?.project?.projectTitle}
         </h3>
-        {project.daysRemaning.days && (
+        {project?.daysRemaning?.days && (
           <>
-            {project.daysRemaning.days > 0 && (
+            {project?.daysRemaning?.days > 0 && (
               <span className="tw-flex tw-mt-2 tw-mb-5 tw-gap-2 tw-font-light tw-text-gray-600 tw-text-sm">
                 <svg
                   width="15px"
