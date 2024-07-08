@@ -68,7 +68,7 @@ export default function Login() {
               Iniciar sesión
             </CardTitle>
             <CardDescription>
-              Ingresa tu email y contraseña para acceder a la cuenta.
+              Ingresa tu email y contraseña.
             </CardDescription>
           </CardHeader>
           <CardContent>

@@ -38,28 +38,26 @@ export default function EvaluationRequestedItem({
         <h3 className="tw-text-xl  tw-font-bold">
           {project?.project.projectTitle}
         </h3>
-        {project.daysRemaning.days > 0 && (
-          <span className="tw-flex tw-mt-2 tw-mb-5 tw-gap-2 tw-font-light tw-text-gray-600 tw-text-sm">
-            <svg
-              width="15px"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            Tiene {project.daysRemaning.days}{" "}
-            {project.daysRemaning.days == 1 ? "día" : "días"} restante para
-            calificar el proyecto
-          </span>
-        )}
+        <span className="tw-flex tw-mt-2 tw-mb-5 tw-gap-2 tw-font-light tw-text-gray-600 tw-text-sm">
+          <svg
+            width="15px"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+          Tiene {project.daysRemaning?.days ?? 0}{" "}
+          {project.daysRemaning?.days === 1 ? "día" : "días"} restante para
+          calificar el proyecto
+        </span>
         {project.daysRemaning.days == 0 && (
           <span className="tw-flex tw-mt-2 tw-mb-5 tw-gap-2 tw-font-light tw-text-red-600 tw-text-sm">  <svg
           width="15px"

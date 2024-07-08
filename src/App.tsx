@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Login from './pages/login'
 import StudentHome from './pages/studentHome'
@@ -11,6 +11,7 @@ function App() {
   return (
     <>
        <Routes>
+        <Route path="/" element={<Navigate replace to="/login"/>}/>
         <Route path="/student" element={ <StudentHome /> } />
         <Route path="/teacher" element={ <TeacherHome /> } />
         <Route path="/admin" element={ <AdminHome /> } />

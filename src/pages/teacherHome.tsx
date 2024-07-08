@@ -18,7 +18,7 @@ const userNavigation = [
   { name: 'Cerrar sesión', href: '#' },
 ]
 
-function classNames(...classes) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -148,7 +148,7 @@ export default function TeacherHome() {
                       className="tw-relative tw-ml-auto tw-flex-shrink-0 tw-rounded-full tw-bg-gray-800 tw-p-1 tw-text-gray-400 hover:tw-text-white focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-white focus:tw-ring-offset-2 focus:tw-ring-offset-gray-800"
                     >
                       <span className="tw-absolute -tw-inset-1.5" />
-                      <span className="tw-sr-only">View notifications</span>
+                      <span className="tw-sr-only">Ver notificaciones</span>
                       <BellIcon className="tw-h-6 tw-w-6" aria-hidden="true" />
                     </button>
                   </div>
